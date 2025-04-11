@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Recipe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Add New Recipe</h1>
+    <form action="/auth/recipes/add" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Recipe Name</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="ingredients" class="form-label">Ingredients</label>
+            <textarea id="ingredients" name="ingredients" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="imageUrl" class="form-label">Image URL</label>
+            <input type="url" id="imageUrl" name="imageUrl" class="form-control"  required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="cook" class="form-label">Cook</label>
+            <input type="text" id="cook" name="cook" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add Recipe</button>
+    </form>
+</body>
+</html>
+<script>
+    // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
+    fetch('/auth/username')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(username => {
+            if (username === "Guest" || username === "") {
+                // Ha nincs bejelentkezve, átirányítás a login oldalra
+                window.location.href = "/index.html?error=You must be logged in to access this page!";
+            } else {
+                // Ha be van jelentkezve, frissítjük a gomb szövegét
+                const usernameButton = document.getElementById('username-button');
+                if (usernameButton) {
+                    usernameButton.textContent = username;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching username:', error);
+            // Hiba esetén is átirányíthatjuk a login oldalra
+            window.location.href = "/index.html?error=You must be logged in to access this page!";
+        });
+</script>
