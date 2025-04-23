@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import com.recipe.recipe.recipebook.RecipeBookEntity;
 import com.recipe.recipe.recipebook.RecipeBookRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,17 +145,21 @@ public class RecipeApplicationController {
     }
 
     @GetMapping("/myrecipes")
-public List<RecipeBookEntity> getMyRecipes(HttpSession session) {
+public ResponseEntity<?> getMyRecipes(HttpSession session) {
+    System.out.println("Session ID: " + session.getId()); // debug
     String loggedInUser = (String) session.getAttribute("loggedInUser");
+    System.out.println("Logged in user: " + loggedInUser); // debug
+    
     if (loggedInUser == null) {
-        throw new IllegalStateException("You must be logged in to view your recipes!");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must be logged in!");
     }
-
-    // Csak a bejelentkezett felhasználó által létrehozott receptek
-    return recipeBookRepository.findByCreator(loggedInUser);
+    
+    List<RecipeBookEntity> recipes = recipeBookRepository.findByCreator(loggedInUser);
+    System.out.println("Found recipes count: " + recipes.size()); // debug
+    return ResponseEntity.ok(recipes);
 }
 
-@PutMapping("/recipes/{id}")
+@PutMapping("/auth/putrecipes/{id}")
 public ResponseEntity<?> updateRecipe(@PathVariable Long id, @RequestBody RecipeBookEntity updatedRecipe, HttpSession session) {
     String loggedInUser = (String) session.getAttribute("loggedInUser");
     RecipeBookEntity recipe = recipeBookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
