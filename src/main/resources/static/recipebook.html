@@ -4,36 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Book</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-        main {
-            padding: 1rem;
-        }
-        footer {
-            background-color: #f1f1f1;
-            text-align: center;
-            padding: 1rem;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        @media (max-width: 600px) {
-            header, footer {
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -42,55 +13,109 @@
             <div class="collapse navbar-collapse" id="mynavbarz">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/allrecipes.html">All Recipes</a>
+                        <a class="nav-link active" href="/recipebook.html">All Recipes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/newrecipe.html">New Recipe</a>
+                        <a class="nav-link " href="/newrecipe.html">New Recipe</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/myrecipes.html">My Recipes</a>
                     </li>
                 </ul>
-                <div class="navbar-text me-auto">
-                    <button class="btn btn-primary" type="button" id="username-button">User</button>
+                <div class="d-flex ms-auto align-items-center">
+                    <button class="btn btn-outline-light me-2" type="button" id="username-button">User</button>
+                    <form action="/auth/logout" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
                 </div>
-                <script>
-                    // Fetch the logged-in user's username
-                    fetch('/auth/username')
-                        .then(response => response.text())
-                        .then(username => {
-                            // Update the button text with the username
-                            const usernameButton = document.getElementById('username-button');
-                            usernameButton.textContent = username;
-                        })
-                        .catch(error => {
-                            console.error('Error fetching username:', error);
-                        });
-                </script>
             </div>
         </div>
     </nav>
-    <main>
-        <p id="welcome-message">Welcome to the Recipe Book!</p>
-    </main>
+
+    <div class="container mt-4">
+        <h1>Recipe Book</h1>
+        <div id="recipes-container" class="row g-4">
+            <!-- A receptek itt jelennek meg -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="recipeModalLabel">Recipe Name</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="recipeImage" src="" alt="Recipe Image" class="img-fluid mb-3">
+                    <h1>Ingredients</h1>
+                    <ul id="recipeIngredients" class="list-group mb-3"></ul>
+                    <h1>Description</h1>
+                    <div id="recipeDescription" style="white-space: pre-line;"></div>
+                    <p ></p>
+                    <p><strong>Cook:</strong> <span id="recipeCook"></span></p>
+                    <p><strong>Creator:</strong> <span id="recipeCreator"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
         fetch('/auth/username')
             .then(response => response.text())
             .then(username => {
                 if (username === "Guest" || username === "") {
-                    // Ha nincs bejelentkezve, átirányítás a login oldalra
                     window.location.href = "/index.html?error=You must be logged in to access this page!";
                 } else {
-                    // Ha be van jelentkezve, frissítjük a gomb szövegét
                     const usernameButton = document.getElementById('username-button');
                     usernameButton.textContent = username;
                 }
             })
             .catch(error => {
                 console.error('Error fetching username:', error);
-                // Hiba esetén is átirányíthatjuk a login oldalra
                 window.location.href = "/index.html?error=You must be logged in to access this page!";
+            });
+
+        // Lekérjük az összes receptet a szerverről
+        fetch('/auth/recipes')
+            .then(response => response.json())
+            .then(recipes => {
+                const container = document.getElementById('recipes-container');
+                recipes.forEach(recipe => {
+                    // Dinamikusan létrehozunk egy kártyát minden recepthez
+                    const card = document.createElement('div');
+                    card.className = 'col-12 col-sm-6 col-md-4'; // Responsive osztályok
+                    card.innerHTML = `
+                        <div class="card mb-4" style="cursor: pointer;">
+                            <img src="${recipe.imageUrl}" class="card-img-top" alt="${recipe.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${recipe.name}</h5>
+                            </div>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => {
+     // Beállítjuk a modális tartalmát
+        document.getElementById('recipeModalLabel').textContent = recipe.name;
+        document.getElementById('recipeImage').src = recipe.imageUrl;
+        document.getElementById('recipeIngredients').innerHTML = recipe.ingredients
+            .split('\n') // Feltételezzük, hogy az összetevők vesszővel vannak elválasztva
+            .map(ingredient => `<li class="list-group-item">${ingredient.trim()}</li>`)
+            .join('');
+        document.getElementById('recipeDescription').textContent = recipe.description;
+        document.getElementById('recipeCook').textContent = recipe.cook;
+        document.getElementById('recipeCreator').textContent = recipe.creator;
+
+    // Megnyitjuk a modális ablakot
+    const modal = new bootstrap.Modal(document.getElementById('recipeModal'));
+    modal.show();
+});
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching recipes:', error);
             });
     </script>
 </body>

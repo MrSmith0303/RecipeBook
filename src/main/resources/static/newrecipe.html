@@ -30,8 +30,36 @@
         }
 
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="mynavbarz">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/recipebook.html">All Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/newrecipe.html">New Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/myrecipes.html">My Recipes</a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-auto align-items-center">
+                    <button class="btn btn-outline-light me-2" type="button" id="username-button">User</button>
+                    <form action="/auth/logout" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
     <h1>Add New Recipe</h1>
     <form action="/auth/recipes/add" method="post">
         <div class="mb-3">
@@ -40,15 +68,15 @@
         </div>
         <div class="mb-3">
             <label for="ingredients" class="form-label">Ingredients</label>
-            <textarea id="ingredients" name="ingredients" class="form-control" required></textarea>
+            <textarea id="ingredients" name="ingredients" class="form-control" rows="10" maxlength="1000" required></textarea>
         </div>
         <div class="mb-3">
             <label for="imageUrl" class="form-label">Image URL</label>
-            <input type="url" id="imageUrl" name="imageUrl" class="form-control"  required>
+            <input type="url" id="imageUrl" name="imageUrl" class="form-control" placeholder="Leave empty for default image">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea id="description" name="description" class="form-control" rows="3" required></textarea>
+            <textarea id="description" name="description" class="form-control" rows="10" maxlength="2000" required></textarea>
         </div>
         <div class="mb-3">
             <label for="cook" class="form-label">Cook</label>
@@ -84,4 +112,10 @@
             // Hiba esetén is átirányíthatjuk a login oldalra
             window.location.href = "/index.html?error=You must be logged in to access this page!";
         });
+</script>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success')) {
+        alert(urlParams.get('success')); // Megjeleníti a sikerüzenetet
+    }
 </script>

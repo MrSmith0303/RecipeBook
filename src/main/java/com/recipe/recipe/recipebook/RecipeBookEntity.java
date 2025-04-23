@@ -11,11 +11,18 @@ public class RecipeBookEntity {
     private Long id;
 
     private String name;
+
+    @Lob
     private String ingredients;
+
+    @Column(length = 2000)
     private String imageUrl;
+
+    @Column(length = 2000)
     private String description;
     private String cook;
-    private String creator; // Új változó
+    @Column(name = "creator")
+    private String creator;
 
     // Alapértelmezett konstruktor
     public RecipeBookEntity() {
@@ -63,6 +70,7 @@ public class RecipeBookEntity {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 
     public String getDescription() {
         return description;
