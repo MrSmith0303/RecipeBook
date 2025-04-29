@@ -16,10 +16,10 @@
             <div class="collapse navbar-collapse" id="mynavbarz">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/index.html">Login</a>
+                        <a class="nav-link active" href="/index.html">Bejelentkezés</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register.html">Register</a>
+                        <a class="nav-link" href="/register.html">Regisztráció</a>
                     </li>
                 </ul>
             </div>
@@ -29,30 +29,30 @@
 
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
-            <h2 class="text-center mb-4">Register</h2>
+            <h2 class="text-center mb-4">Regisztráció</h2>
             <form action="/auth/register" method="post">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                    <label for="username" class="form-label">Felhasználónév</label>
                     <input type="text"  id="username" name="username" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label">E-mail</label>
                     <input type="email"  id="email" name="email" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">Jelszó</label>
                     <input type="password"  id="password" name="password" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Repeat password</label>
+                    <label for="password" class="form-label">Jelszó megerősítése</label>
                     <input type="password"  name="psw-repeat" id="psw-repeat" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                    <label for="phoneNumber" class="form-label">Telefonszám</label>
                     <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="country" class="form-label">Country</label>
+                    <label for="country" class="form-label">Ország</label>
                     <select name="country" class="form-control" id="country">
                         <option value="0" label="Select a country ... " selected="selected">Select a country ... </option>
                         <optgroup id="country-optgroup-Africa" label="Africa">
@@ -320,26 +320,26 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="postalCode" class="form-label">Postal code</label>
+                    <label for="postalCode" class="form-label">Irányító szám</label>
                     <input type="text" name="postalCode" id="postalCode" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="city" class="form-label">City</label>
+                    <label for="city" class="form-label">Város</label>
                     <input type="text" name="city" id="city" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="adress" class="form-label">Aderss</label>
+                    <label for="adress" class="form-label">Cím</label>
                     <input type="text" name="adress" id="adress" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="dateOfBirth" class="form-label">Date of birth</label>
+                    <label for="dateOfBirth" class="form-label">Születési Dátum</label>
                     <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" required>
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="terms" required>
-                    <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
+                    <label class="form-check-label" for="terms">Elolvastam és elfogadom a felhasználási feltételeket.</label>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <button type="submit" class="btn btn-primary w-100">Regisztráció</button>
             </form>
         </div>
     </div>

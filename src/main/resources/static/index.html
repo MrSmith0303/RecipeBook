@@ -16,10 +16,10 @@
             <div class="collapse navbar-collapse" id="mynavbarz">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/index.html">Login</a>
+                        <a class="nav-link active" href="/index.html">Bejelentkezés</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register.html">Register</a>
+                        <a class="nav-link" href="/register.html">Regisztráció</a>
                     </li>
                 </ul>
             </div>
@@ -28,20 +28,20 @@
     
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
-            <h2 class="text-center mb-4">Login</h2>
+            <h2 class="text-center mb-4">Bejelentkezés</h2>
             <form action="/auth/login" method="post">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                    <label for="username" class="form-label">Felhasználónév</label>
                     <input type="text" id="username" name="username" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">Jelszó</label>
                     <input type="password" id="password" name="password" class="form-control" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-primary w-100">Bejelentkezés</button>
             </form>
             <div class="text-center mt-3">
-                <a href="/register.html" class="btn btn-secondary w-100">Register</a>
+                <a href="/register.html" class="btn btn-secondary w-100">Regisztráció</a>
             </div>
         </div>
     </div>

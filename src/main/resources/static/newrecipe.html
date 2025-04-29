@@ -39,19 +39,19 @@
             <div class="collapse navbar-collapse" id="mynavbarz">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/recipebook.html">All Recipes</a>
+                        <a class="nav-link" href="/recipebook.html">Összes recept</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/newrecipe.html">New Recipe</a>
+                        <a class="nav-link active" href="/newrecipe.html">Új recepet hozzáadása</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/myrecipes.html">My Recipes</a>
+                        <a class="nav-link" href="/myrecipes.html">Receptjeim</a>
                     </li>
                 </ul>
                 <div class="d-flex ms-auto align-items-center">
                     <button class="btn btn-outline-light me-2" type="button" id="username-button">User</button>
                     <form action="/auth/logout" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Logout</button>
+                        <button type="submit" class="btn btn-danger">Kijelentkezés</button>
                     </form>
                 </div>
             </div>
@@ -60,29 +60,29 @@
 
 
 
-    <h1>Add New Recipe</h1>
+    <h1>Új recept letrehozása</h1>
     <form action="/auth/recipes/add" method="post">
         <div class="mb-3">
-            <label for="name" class="form-label">Recipe Name</label>
+            <label for="name" class="form-label">Recept neve</label>
             <input type="text" id="name" name="name" class="form-control" required>
         </div>
         <div class="mb-3">
-            <label for="ingredients" class="form-label">Ingredients</label>
+            <label for="ingredients" class="form-label">Hozzávalók</label>
             <textarea id="ingredients" name="ingredients" class="form-control" rows="10" maxlength="1000" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="imageUrl" class="form-label">Image URL</label>
+            <label for="imageUrl" class="form-label">Kép URL-címe</label>
             <input type="url" id="imageUrl" name="imageUrl" class="form-control" placeholder="Leave empty for default image">
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
+            <label for="description" class="form-label">Elkészítés/Leírás</label>
             <textarea id="description" name="description" class="form-control" rows="10" maxlength="2000" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="cook" class="form-label">Cook</label>
+            <label for="cook" class="form-label">Idő:</label>
             <input type="text" id="cook" name="cook" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Add Recipe</button>
+        <button type="submit" class="btn btn-primary w-100">Recept hozzáadása</button>
     </form>
 </body>
 </html>

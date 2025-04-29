@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import com.recipe.recipe.recipebook.RecipeBookEntity;
 import com.recipe.recipe.recipebook.RecipeBookRepository;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +66,7 @@ public class RecipeApplicationController {
             @RequestParam String country,
             @RequestParam String postalCode,
             @RequestParam String city,
-            @RequestParam String adress, // helyesen: address
+            @RequestParam String adress,
             @RequestParam String dateOfBirth) {
 
         System.out.println("Regisztrációs kísérlet: username=" + username + ", email=" + email);
@@ -82,7 +81,7 @@ public class RecipeApplicationController {
         newUser.setCountry(country);
         newUser.setPostalCode(postalCode);
         newUser.setCity(city);
-        newUser.setAddress(adress); // helyesen: address
+        newUser.setAddress(adress);
         newUser.setDateOfBirth(dateOfBirth);
 
         try {
@@ -146,38 +145,49 @@ public class RecipeApplicationController {
 
     @GetMapping("/myrecipes")
 public ResponseEntity<?> getMyRecipes(HttpSession session) {
-    System.out.println("Session ID: " + session.getId()); // debug
+    System.out.println("Session ID: " + session.getId());
     String loggedInUser = (String) session.getAttribute("loggedInUser");
-    System.out.println("Logged in user: " + loggedInUser); // debug
+    System.out.println("Logged in user: " + loggedInUser);
     
     if (loggedInUser == null) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must be logged in!");
     }
     
     List<RecipeBookEntity> recipes = recipeBookRepository.findByCreator(loggedInUser);
-    System.out.println("Found recipes count: " + recipes.size()); // debug
+    System.out.println("Found recipes count: " + recipes.size());
     return ResponseEntity.ok(recipes);
 }
 
-@PutMapping("/auth/putrecipes/{id}")
-public ResponseEntity<?> updateRecipe(@PathVariable Long id, @RequestBody RecipeBookEntity updatedRecipe, HttpSession session) {
+@PutMapping("/recipes/{id}")  // Changed from /putrecipes to /recipes
+public ResponseEntity<?> updateRecipe(
+        @PathVariable Long id,
+        @RequestBody RecipeBookEntity updatedRecipe,
+        HttpSession session) {
+    
     String loggedInUser = (String) session.getAttribute("loggedInUser");
-    RecipeBookEntity recipe = recipeBookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
+    if (loggedInUser == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please login first");
+    }
+
+    RecipeBookEntity recipe = recipeBookRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
 
     if (!recipe.getCreator().equals(loggedInUser)) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can only edit your own recipes.");
     }
 
+    // Update only allowed fields
     recipe.setName(updatedRecipe.getName());
     recipe.setIngredients(updatedRecipe.getIngredients());
     recipe.setDescription(updatedRecipe.getDescription());
     recipe.setCook(updatedRecipe.getCook());
+    
     recipeBookRepository.save(recipe);
 
     return ResponseEntity.ok("Recipe updated successfully.");
 }
 
-@GetMapping("/auth/recipes/{id}")
+@GetMapping("/recipes/{id}")
 public ResponseEntity<RecipeBookEntity> getRecipeById(@PathVariable Long id, HttpSession session) {
     String loggedInUser = (String) session.getAttribute("loggedInUser");
     System.out.println("Logged in user: " + loggedInUser);

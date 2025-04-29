@@ -13,19 +13,19 @@
             <div class="collapse navbar-collapse" id="mynavbarz">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/recipebook.html">All Recipes</a>
+                        <a class="nav-link active" href="/recipebook.html">Összes recept</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/newrecipe.html">New Recipe</a>
+                        <a class="nav-link " href="/newrecipe.html">Új recepet hozzáadása</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/myrecipes.html">My Recipes</a>
+                        <a class="nav-link" href="/myrecipes.html">Receptjeim</a>
                     </li>
                 </ul>
                 <div class="d-flex ms-auto align-items-center">
                     <button class="btn btn-outline-light me-2" type="button" id="username-button">User</button>
                     <form action="/auth/logout" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Logout</button>
+                        <button type="submit" class="btn btn-danger">Kijelentkezés</button>
                     </form>
                 </div>
             </div>
@@ -33,7 +33,7 @@
     </nav>
 
     <div class="container mt-4">
-        <h1>Recipe Book</h1>
+        <h1>Összes recept</h1>
         <div id="recipes-container" class="row g-4">
             <!-- A receptek itt jelennek meg -->
         </div>
@@ -44,18 +44,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="recipeModalLabel">Recipe Name</h1>
+                    <h1 class="modal-title fs-5" id="recipeModalLabel">Recept Neve</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <img id="recipeImage" src="" alt="Recipe Image" class="img-fluid mb-3">
-                    <h1>Ingredients</h1>
+                    <h1>Hozzávalók</h1>
                     <ul id="recipeIngredients" class="list-group mb-3"></ul>
-                    <h1>Description</h1>
+                    <h1>Elkészítés/leírás</h1>
                     <div id="recipeDescription" style="white-space: pre-line;"></div>
                     <p ></p>
-                    <p><strong>Cook:</strong> <span id="recipeCook"></span></p>
-                    <p><strong>Creator:</strong> <span id="recipeCreator"></span></p>
+                    <p><strong>Idő:</strong> <span id="recipeCook"></span></p>
+                    <p><strong>Készítő:</strong> <span id="recipeCreator"></span></p>
                 </div>
             </div>
         </div>
